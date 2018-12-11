@@ -20,7 +20,7 @@ cd $rnCommonDir
 & dotnet pack -c Release /p:PackageVersion=$fullBuildNumber -o $rnCommonDir
 
 Write-Host "Attempting to publish NuGet package" -ForegroundColor Green
-& $nuget push $nugetFile -ApiKey $env:NUGET_API_KEY -Source https://www.nuget.org/api/v2/package
+& nuget push $nugetFile -ApiKey $env:NUGET_API_KEY -Source https://www.nuget.org/api/v2/package
 
 
 # Successfully created package 'C:\projects\rn-common\src\Rn.Common\bin\Release\Rn.Common.1.0.19.nupkg'
