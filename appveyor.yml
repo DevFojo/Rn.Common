@@ -9,14 +9,5 @@ branches:
 init:
   # Good practice, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
-before_build:
-  # Display .NET Core version
-  - cmd: dotnet --version
-  # Display minimal restore text
-  - cmd: dotnet restore ./src/Rn.Common/Rn.Common.csproj --verbosity m
 build_script:
-  # output will be in /.src/{YOUR_PROJECT_DIR}/bin/Debug/netcoreapp2.1/publish/
-  - cmd: dotnet publish ./src/Rn.Common/Rn.Common.csproj
-after_build:
-  # change to after_test
   - ps: ./build/package.ps1

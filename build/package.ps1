@@ -1,15 +1,30 @@
 # https://www.appveyor.com/docs/environment-variables/
-# APPVEYOR_BUILD_NUMBER - build number        | 17
-# APPVEYOR_BUILD_VERSION - build version      | 1.0.17
 
-$buildDir = $env:APPVEYOR_BUILD_FOLDER
-$fullBuildNumber = $env:APPVEYOR_BUILD_VERSION
+# Script static variables
+$buildDir = $env:APPVEYOR_BUILD_FOLDER # e.g. C:\projects\rn-common\
+$buildNumber = $env:APPVEYOR_BUILD_VERSION # e.g. 1.0.17
+
+# C:\projects\rn-common\src\Rn.Common
 $projectDir = $buildDir + "\src\Rn.Common";
+# C:\projects\rn-common\src\Rn.Common\Rn.Common.csproj
+$projectFile = $projectDir + "\Rn.Common.csproj";
+# C:\projects\rn-common\src\Rn.CommonTests
 $testDir = $buildDir + "\src\Rn.CommonTests";
-$nugetFile = $projectDir + "\Rn.Common." + $fullBuildNumber + ".nupkg";
+# C:\projects\rn-common\src\Rn.Common\Rn.Common.x.x.x.nupkg
+$nugetFile = $projectDir + "\Rn.Common." + $buildNumber + ".nupkg";
 
+
+# Display .Net Core version
 Write-Host "Checking .NET Core version" -ForegroundColor Green
 & dotnet --version
+
+# Restore the main project
+Write-Host "Restoring project" -ForegroundColor Green
+& dotnet restore $projectFile --verbosity m
+
+# Publish the project
+Write-Host "Publishing project" -ForegroundColor Green
+& dotnet publish $projectFile
 
 # Discover and run tests
 Write-Host "Running tests" -ForegroundColor Green
@@ -27,7 +42,7 @@ if ($testOutput.Contains("Test Run Successful.") -eq $False) {
 # Generate a NuGet package for publishing
 Write-Host "Building NuGet package" -ForegroundColor Green
 cd $projectDir
-& dotnet pack -c Release /p:PackageVersion=$fullBuildNumber -o $projectDir
+& dotnet pack -c Release /p:PackageVersion=$buildNumber -o $projectDir
 
 # Save generated artifacts
 Write-Host "Saving artifacts..." -ForegroundColor Green
