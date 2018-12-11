@@ -6,6 +6,7 @@
 $buildDir = $env:APPVEYOR_BUILD_FOLDER
 $fullBuildNumber = $env:APPVEYOR_BUILD_VERSION
 $rnCommonDir = $buildDir + "\src\Rn.Common";
+$nugetFile = $rnCommonDir + "\Rn.Common." + $fullBuildNumber + ".nupkg";
 
 Write-Host "Checking .NET Core version" -ForegroundColor Green
 & dotnet --version
@@ -16,10 +17,15 @@ Write-Host $env:APPVEYOR_BUILD_VERSION
 
 Write-Host "Building NuGet package" -ForegroundColor Green
 cd $rnCommonDir
-& dotnet pack -c Release /p:PackageVersion=$fullBuildNumber
+& dotnet pack -c Release /p:PackageVersion=$fullBuildNumber -o $rnCommonDir
 
-#  - cmd: dotnet pack -c Release
-#  #- cmd: cd bin/Release
+Write-Host "Attempting to publish NuGet package" -ForegroundColor Green
+& $nuget push $nugetFile -ApiKey $env:NUGET_API_KEY -Source https://www.nuget.org/api/v2/package
+
+
+# Successfully created package 'C:\projects\rn-common\src\Rn.Common\bin\Release\Rn.Common.1.0.19.nupkg'
+
+
 #  #- cmd: dotnet nuget push Rn.Common.1.0.%version%.nupkg  -k %NuGetKey%  -s https://www.nuget.org/
 
 #write-host $buildFolder
