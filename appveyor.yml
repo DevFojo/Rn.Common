@@ -2,7 +2,7 @@ version: 1.0.{build}
  
 install:
 - cmd: |
-    dotnet restore
+    dotnet restore ~/src/Rn.Common/Rn.Common.csproj
 build:
   verbosity: minimal
 #after_build:
