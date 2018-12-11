@@ -1,26 +1,20 @@
 version: 1.0.{build}
- 
-install:
-- cmd: |
-    dotnet restore src/Rn.Common/Rn.Common.csproj
-build:
-  verbosity: minimal
-#after_build:
-#- cmd: dotnet publish src\CoreWebApplication1 --output %appveyor_build_folder%\dist
-#artifacts:
-#- path: dist
-#  name: dist.web
-
-#deploy:
-#- provider: WebDeploy
-#  server: https://ilyaf4.scm.azurewebsites.net/msdeploy.axd?site=ilyaf4
-#  website: ilyaf4
-#  username: $ilyaf4
-#  password:
-#    secure: 6Ld20wVhIzLd+G2PlkT90wZuM4DlJLCPy+hslN4FZwlC/+QL7YzpskuA9TOhJRPSFu77ya3d1GhmdBDz7J9WzA==
-#  artifact: dist.web
-#  aspnet_core: true
-#  aspnet_core_force_restart: true
-#  app_offline: true
-#  on:
-#    deploy_me: true #do not deploy this way for now
+image: Visual Studio 2017
+branches:
+  only:
+  - master
+init:
+  # Good practice, because Windows line endings are different from Unix/Linux ones
+  - cmd: git config --global core.autocrlf true
+before_build:
+  # Display .NET Core version
+  - cmd: dotnet --version
+  # Display minimal restore text
+  - cmd: dotnet restore --verbosity m
+build_script:
+  # output will be in /.src/{YOUR_PROJECT_DIR}/bin/Debug/netcoreapp2.1/publish/
+  - cmd: dotnet publish ./src/Rn.Common/Rn.Common.csproj
+after_build:
+  # For once the build has completed
+on_finish :
+  # any cleanup in here
