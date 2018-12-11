@@ -5,7 +5,7 @@
 
 $buildDir = $env:APPVEYOR_BUILD_FOLDER
 $fullBuildNumber = $env:APPVEYOR_BUILD_VERSION
-#$rnCommonDir = $buildDir + "\src\Rn.Common";
+$rnCommonDir = $buildDir + "\src\Rn.Common";
 
 Write-Host "Checking .NET Core version" -ForegroundColor Green
 & dotnet --version
@@ -15,6 +15,7 @@ Write-Host $env:APPVEYOR_BUILD_NUMBER
 Write-Host $env:APPVEYOR_BUILD_VERSION
 
 Write-Host "Building NuGet package" -ForegroundColor Green
+cd $rnCommonDir
 & dotnet pack -c Release /p:PackageVersion=$fullBuildNumber
 
 #  - cmd: dotnet pack -c Release
