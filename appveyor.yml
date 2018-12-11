@@ -1,14 +1,11 @@
+# https://www.appveyor.com/docs/appveyor-yml/
+# Encrypt for YML: https://ci.appveyor.com/tools/encrypt
+
 version: 1.0.{build}
 image: Visual Studio 2017
 branches:
   only:
   - master
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*
-  assembly_version: "1.0.{build}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
 init:
   # Good practice, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
@@ -24,13 +21,15 @@ after_build:
   # For once the build has completed
   - cmd: cd src/Rn.Common
   - cmd: dotnet pack -c Release
-  - cmd: cd bin/Release
-  - cmd: dotnet nuget push Rn.Common.1.0.%version%.nupkg  -k %NuGetKey%  -s https://www.nuget.org/
+  #- cmd: cd bin/Release
+  #- cmd: dotnet nuget push Rn.Common.1.0.%version%.nupkg  -k %NuGetKey%  -s https://www.nuget.org/
 test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./src/Rn.CommonTests/Rn.CommonTests.csproj --verbosity m
   # run the unit tests (requires changing into the test directory)
   - cmd: cd src/Rn.CommonTests
   - cmd: dotnet test
+artifacts:
+  - path: '**\*.nupkg'
 on_finish :
   # any cleanup in here
