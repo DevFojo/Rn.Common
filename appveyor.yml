@@ -18,11 +18,12 @@ build_script:
   # output will be in /.src/{YOUR_PROJECT_DIR}/bin/Debug/netcoreapp2.1/publish/
   - cmd: dotnet publish ./src/Rn.Common/Rn.Common.csproj
 after_build:
-  # For once the build has completed
-  - cmd: cd src/Rn.Common
-  - cmd: dotnet pack -c Release
-  #- cmd: cd bin/Release
-  #- cmd: dotnet nuget push Rn.Common.1.0.%version%.nupkg  -k %NuGetKey%  -s https://www.nuget.org/
+#  # For once the build has completed
+#  - cmd: cd src/Rn.Common
+#  - cmd: dotnet pack -c Release
+#  #- cmd: cd bin/Release
+#  #- cmd: dotnet nuget push Rn.Common.1.0.%version%.nupkg  -k %NuGetKey%  -s https://www.nuget.org/
+  - ps: ./build/package.ps1
 test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./src/Rn.CommonTests/Rn.CommonTests.csproj --verbosity m
@@ -31,5 +32,13 @@ test_script:
   - cmd: dotnet test
 artifacts:
   - path: '**\*.nupkg'
+#deploy:
+#  - provider: NuGet
+#    server: https://www.nuget.org/
+#    api_key:
+#      secure: hJJwAZnNTelD6GecxiBTGyczeTJVzbtUX/LEu5zOyPPQ1qNEKBYqeVb53pPDKpxD
+#    #skip_symbols: false
+#    #symbol_server: https://your.symbol.server/feed
+#    artifact: MyPackage.nupkg
 on_finish :
   # any cleanup in here
