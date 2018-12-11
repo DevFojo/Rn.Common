@@ -40,17 +40,17 @@ if ($testOutput.Contains("Test Run Successful.") -eq $False) {
 }
 
 # Generate a NuGet package for publishing
-Write-Host "Building NuGet package" -ForegroundColor Green
+Write-Host "Generating NuGet Package" -ForegroundColor Green
 cd $projectDir
 & dotnet pack -c Release /p:PackageVersion=$buildNumber -o $projectDir
 
 # Save generated artifacts
-Write-Host "Saving artifacts..." -ForegroundColor Green
+Write-Host "Saving Artifacts" -ForegroundColor Green
 Push-AppveyorArtifact $nugetFile
 
 # Publish package to NuGet
-Write-Host "Attempting to publish NuGet package" -ForegroundColor Green
+Write-Host "Publishing NuGet package" -ForegroundColor Green
 & nuget push $nugetFile -ApiKey $env:NUGET_API_KEY -Source https://www.nuget.org/api/v2/package
 
 # Done
-Write-Host "All done." -ForegroundColor Green
+Write-Host "Done!" -ForegroundColor Green
