@@ -31,7 +31,7 @@ cd $projectDir
 
 # Save generated artifacts
 Write-Host "Saving artifacts..." -ForegroundColor Green
-Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+Push-AppveyorArtifact $nugetFile
 
 # Publish package to NuGet
 Write-Host "Attempting to publish NuGet package" -ForegroundColor Green
