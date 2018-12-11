@@ -3,6 +3,12 @@ image: Visual Studio 2017
 branches:
   only:
   - master
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "1.0.{build}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
 init:
   # Good practice, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
@@ -17,9 +23,9 @@ build_script:
 after_build:
   # For once the build has completed
   - cmd: cd src/Rn.Common
-  - cmd: dotnet pack -c Release /p:PackageVersion=1.0.{{build}}
+  - cmd: dotnet pack -c Release
   - cmd: cd bin/Release
-  - cmd: dotnet nuget push Rn.Common.1.0.{{build}}.nupkg  -k {{NuGetKey}}  -s https://www.nuget.org/
+  - cmd: dotnet nuget push Rn.Common.1.0.%version%.nupkg  -k %NuGetKey%  -s https://www.nuget.org/
 test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./src/Rn.CommonTests/Rn.CommonTests.csproj --verbosity m
