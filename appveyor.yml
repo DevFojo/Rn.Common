@@ -10,7 +10,7 @@ before_build:
   # Display .NET Core version
   - cmd: dotnet --version
   # Display minimal restore text
-  - cmd: dotnet restore --verbosity m
+  - cmd: dotnet restore ./src/Rn.Common/Rn.Common.csproj --verbosity m
 build_script:
   # output will be in /.src/{YOUR_PROJECT_DIR}/bin/Debug/netcoreapp2.1/publish/
   - cmd: dotnet publish ./src/Rn.Common/Rn.Common.csproj
