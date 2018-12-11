@@ -16,6 +16,10 @@ build_script:
   - cmd: dotnet publish ./src/Rn.Common/Rn.Common.csproj
 after_build:
   # For once the build has completed
+  - cmd: cd src/Rn.Common
+  - cmd: dotnet pack -c Release /p:PackageVersion=1.0.{build}
+  - cmd: cd bin/Release
+  - cmd: dotnet nuget push Rn.Common.1.0.{build}.nupkg  -k {NuGetKey}  -s https://www.nuget.org/
 test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./src/Rn.CommonTests/Rn.CommonTests.csproj --verbosity m
