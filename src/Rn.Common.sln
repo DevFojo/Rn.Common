@@ -5,11 +5,12 @@ VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rn.Common", "Rn.Common\Rn.Common.csproj", "{CD613B81-6800-4B7D-B112-1623D0454A9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rn.CommonTests", "Rn.CommonTests\Rn.CommonTests.csproj", "{B732CDDF-184D-47A3-9025-E770F2748402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rn.CommonTests", "Rn.CommonTests\Rn.CommonTests.csproj", "{B732CDDF-184D-47A3-9025-E770F2748402}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AE52B1B8-6F2F-4E3D-A19C-9DB561BE3B0A}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Global
